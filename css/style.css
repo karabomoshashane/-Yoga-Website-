@@ -1,0 +1,812 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;700&display=swap');
+
+/* Custom Properties (Consolidated to max three core colors) */
+:root {
+    --main-dark: #1A1A1A; /* Primary dark for most backgrounds, sections, and elements */
+    --main-accent: #2ECC71; /* Green accent for highlights, buttons, links */
+    --main-light: #F0F0F0; /* Light text for readability and contrast */
+
+    /* Derived colors using RGBA or slight variations from the main three */
+    --main-dark-subtle: rgba(26, 26, 26, 0.85); /* Slightly transparent dark for certain elements */
+    --main-accent-darker: #28B463; /* Slightly darker green for hover states */
+    --main-accent-transparent: rgba(46, 204, 113, 0.1); /* Light transparent accent for hover effects */
+    --main-light-transparent-border: rgba(240, 240, 240, 0.1); /* Transparent light for subtle borders */
+    --main-light-subtle-text: #b0b0b0; /* Subtler light color for secondary text/authors */
+}
+
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Reset and base styles */
+body {
+    margin: 0;
+    font-family: 'Raleway', sans-serif;
+    line-height: 1.6;
+    color: var(--main-light); /* Default text color */
+    background-color: var(--main-dark); /* Default background */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dark mode styles */
+body.dark-mode {
+    --main-dark: #1A1A1A;
+    --main-accent: #2ECC71;
+    --main-light: #F0F0F0;
+    --main-dark-subtle: rgba(26, 26, 26, 0.85);
+    --main-accent-darker: #28B463;
+    --main-accent-transparent: rgba(46, 204, 113, 0.1);
+    --main-light-transparent-border: rgba(240, 240, 240, 0.1);
+    --main-light-subtle-text: #b0b0b0;
+}
+
+body.light-mode {
+    --main-dark: #F0F0F0; /* Light background */
+    --main-accent: #2ECC71;
+    --main-light: #1A1A1A; /* Dark text */
+    --main-dark-subtle: rgba(240, 240, 240, 0.85);
+    --main-accent-darker: #28B463;
+    --main-accent-transparent: rgba(46, 204, 113, 0.1);
+    --main-light-transparent-border: rgba(26, 26, 26, 0.1);
+    --main-light-subtle-text: #555555;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: var(--main-light);
+}
+
+h1 { font-size: 3rem; }
+h2 { font-size: 2.2rem; }
+h3 { font-size: 1.7rem; }
+h4 { font-size: 1.3rem; }
+p, ul, li { /* Adjusted font size for readability */
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+a {
+    color: var(--main-accent);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--main-accent-darker);
+    text-decoration: underline;
+}
+
+/* Layout */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.container__main-sidebar {
+    display: flex;
+    flex-wrap: wrap; /* Allows wrapping on smaller screens */
+    gap: 2rem;
+    padding: 2rem 0;
+}
+
+.container__main {
+    flex: 3; /* Takes more space */
+    min-width: 0; /* Prevents overflow */
+}
+
+.container__sidebar {
+    flex: 1; /* Takes less space */
+    min-width: 280px; /* Minimum width for sidebar */
+    background-color: var(--main-dark-subtle);
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Header */
+header {
+    background-color: var(--main-dark);
+    color: var(--main-light);
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--main-light-transparent-border);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    height: 50px;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 1.5rem; /* Space between nav items */
+}
+
+nav ul li a {
+    color: var(--main-light);
+    font-weight: 600;
+    padding: 0.5rem 0;
+    position: relative;
+}
+
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--main-accent);
+    transition: width 0.3s ease;
+}
+
+nav ul li a:hover::after,
+nav ul li a.active::after {
+    width: 100%;
+}
+
+/* Hamburger menu toggle */
+.menu-toggle {
+    display: none; /* Hidden by default on larger screens */
+    background: none;
+    border: none;
+    color: var(--main-light);
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+
+/* Dark mode toggle */
+.dark-mode-toggle {
+    background: none;
+    border: none;
+    color: var(--main-light);
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-left: 1rem;
+    transition: color 0.3s ease;
+}
+
+.dark-mode-toggle:hover {
+    color: var(--main-accent);
+}
+
+/* Banner Section */
+.banner {
+    background-size: cover; /* Corrected to cover for better responsiveness */
+    background-position: center;
+    color: var(--main-light);
+    text-align: center;
+    padding: 6rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+}
+
+.container-bacg {
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay for text readability */
+    padding: 2rem;
+    border-radius: 10px;
+}
+
+.banner h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+}
+
+.banner p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.cta-button {
+    display: inline-block;
+    background-color: var(--main-accent);
+    color: var(--main-dark);
+    padding: 0.8rem 2rem;
+    border-radius: 5px;
+    font-weight: 700;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.cta-button:hover {
+    background-color: var(--main-accent-darker);
+    transform: translateY(-2px);
+    text-decoration: none;
+}
+
+/* Content Sections */
+.content {
+    padding: 2rem 0;
+    background-color: var(--main-dark);
+    color: var(--main-light);
+}
+
+.content h2 {
+    color: var(--main-accent);
+    margin-bottom: 1.5rem;
+}
+
+/* Testimonial */
+.testimonial {
+    background-color: var(--main-accent-transparent);
+    border-left: 5px solid var(--main-accent);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    font-style: italic;
+    color: var(--main-light);
+}
+
+.testimonial .author {
+    font-weight: 600;
+    text-align: right;
+    margin-top: 1rem;
+    color: var(--main-light-subtle-text);
+}
+
+/* FAQ Section */
+.faq {
+    background-color: var(--main-dark);
+    padding: 2rem 0;
+}
+
+.faq-item {
+    background-color: var(--main-dark-subtle);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.faq-item h4 {
+    color: var(--main-accent);
+    cursor: pointer;
+    margin-bottom: 0.5rem;
+}
+
+.faq-item p {
+    display: none; /* Hidden by default, toggled by JS */
+    padding-top: 0.5rem;
+    color: var(--main-light);
+}
+
+.faq-item.active p {
+    display: block;
+}
+
+/* Form Styles */
+form {
+    background-color: var(--main-dark-subtle);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 2rem;
+}
+
+form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--main-light);
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="date"],
+form input[type="time"],
+form input[type="number"],
+form select,
+form textarea {
+    width: calc(100% - 20px); /* Adjust for padding */
+    padding: 10px;
+    margin-bottom: 1rem;
+    border: 1px solid var(--main-light-transparent-border);
+    border-radius: 4px;
+    background-color: var(--main-dark);
+    color: var(--main-light);
+    font-size: 1rem;
+}
+
+form input[type="text"]:focus,
+form input[type="email"]:focus,
+form input[type="date"]:focus,
+form input[type="time"]:focus,
+form input[type="number"]:focus,
+form select:focus,
+form textarea:focus {
+    outline: none;
+    border-color: var(--main-accent);
+}
+
+form button[type="submit"] {
+    width: auto;
+    padding: 0.8rem 2rem;
+    background-color: var(--main-accent);
+    color: var(--main-dark);
+    border: none;
+    border-radius: 5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+form button[type="submit"]:hover {
+    background-color: var(--main-accent-darker);
+    transform: translateY(-2px);
+}
+
+/* Map container */
+.map-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    border-radius: 8px;
+}
+
+.map-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+/* Gallery Styles */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    padding-top: 1.5rem;
+}
+
+.gallery-item {
+    background-color: var(--main-dark-subtle);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover {
+    transform: translateY(-5px);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+}
+
+.gallery-item .caption {
+    padding: 1rem;
+    color: var(--main-light);
+    font-size: 0.9rem;
+}
+
+/* Instructor Profiles */
+.instructor-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.instructor {
+    background-color: var(--main-dark-subtle);
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.instructor img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+    border: 3px solid var(--main-accent);
+}
+
+.instructor h4 {
+    color: var(--main-accent);
+    margin-bottom: 0.5rem;
+}
+
+.instructor .specialty {
+    font-style: italic;
+    color: var(--main-light-subtle-text);
+    margin-bottom: 1rem;
+}
+
+/* Table styles for classes and schedule */
+.schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.5rem;
+    background-color: var(--main-dark-subtle);
+    border-radius: 8px;
+    overflow: hidden; /* Ensures rounded corners apply to content */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.schedule-table th,
+.schedule-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--main-light-transparent-border);
+    color: var(--main-light);
+}
+
+.schedule-table th {
+    background-color: var(--main-accent);
+    color: var(--main-dark);
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.schedule-table tbody tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.1); /* Subtle stripe effect */
+}
+
+.schedule-table .book-class-button {
+    display: inline-block;
+    background-color: var(--main-light);
+    color: var(--main-dark);
+    padding: 0.6rem 1.2rem;
+    border-radius: 5px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.schedule-table .book-class-button:hover {
+    background-color: #cccccc;
+}
+
+/* Pricing Card Styles */
+.pricing-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.pricing-card {
+    background-color: var(--main-dark-subtle);
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    border: 1px solid var(--main-light-transparent-border);
+}
+
+.pricing-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--main-accent);
+}
+
+.pricing-card h3 {
+    color: var(--main-accent);
+    margin-bottom: 1rem;
+}
+
+.pricing-card .price {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--main-light);
+    margin-bottom: 1.5rem;
+}
+
+.pricing-card ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 1.5rem;
+}
+
+.pricing-card ul li {
+    margin-bottom: 0.5rem;
+    color: var(--main-light);
+}
+
+.pricing-card .cta-button {
+    width: 100%;
+    padding: 0.7rem;
+    font-size: 1rem;
+}
+
+/* Feedback Page Specific Styles */
+.star-rating {
+    display: inline-block;
+    unicode-bidi: bidi-override;
+    direction: rtl;
+    text-align: left;
+    margin-bottom: 1rem;
+}
+
+.star-rating input {
+    display: none;
+}
+
+.star-rating label {
+    font-size: 2rem;
+    color: var(--main-light-subtle-text);
+    cursor: pointer;
+    padding: 0 0.1rem;
+}
+
+.star-rating input:checked ~ label,
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+    color: gold;
+}
+
+.privacy-consent {
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    color: var(--main-light);
+    font-size: 0.9rem;
+}
+
+.privacy-consent input {
+    margin-right: 0.5rem;
+    margin-top: 0.2rem;
+    flex-shrink: 0;
+}
+
+.privacy-consent a {
+    text-decoration: underline;
+}
+
+.form-messages {
+    margin-top: 1rem;
+    padding: 0.8rem;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.form-messages.success {
+    background-color: rgba(46, 204, 113, 0.2);
+    color: var(--main-accent);
+    border: 1px solid var(--main-accent);
+}
+
+.form-messages.error {
+    background-color: rgba(231, 76, 60, 0.2);
+    color: #e74c3c;
+    border: 1px solid #e74c3c;
+}
+
+/* Footer */
+footer {
+    background-color: var(--main-dark);
+    color: var(--main-light);
+    padding: 2rem 0;
+    text-align: center;
+    border-top: 1px solid var(--main-light-transparent-border);
+    font-size: 0.9rem;
+}
+
+footer p {
+    margin: 0.5rem 0;
+    color: var(--main-light-subtle-text);
+}
+
+footer a {
+    color: var(--main-accent);
+}
+
+.social-icons {
+    margin: 1rem 0;
+}
+
+.social-icons img {
+    height: 30px;
+    width: 30px;
+    margin: 0 0.8rem;
+    transition: transform 0.3s ease;
+}
+
+.social-icons img:hover {
+    transform: scale(1.1);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .container__main-sidebar {
+        flex-direction: column;
+    }
+
+    .container__main,
+    .container__sidebar {
+        flex: auto;
+        min-width: unset;
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    h1 { font-size: 2.5rem; }
+    h2 { font-size: 1.8rem; }
+    h3 { font-size: 1.4rem; }
+    h4 { font-size: 1.2rem; }
+    /* Font size for paragraphs and lists remains 1rem from base, or adjusted by more specific rules if needed */
+
+    .banner h1 {
+        font-size: 2.5rem;
+    }
+
+    .banner p {
+        font-size: 1rem;
+    }
+
+    .cta-button {
+        padding: 0.7rem 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    header .container {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    nav {
+        order: 3; /* Move navigation below logo and toggles */
+        width: 100%;
+        margin-top: 1rem;
+    }
+
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        display: none; /* Hidden by default for mobile menu */
+    }
+
+    nav ul.active {
+        display: flex; /* Show when active */
+    }
+
+    .menu-toggle {
+        display: block; /* Show hamburger on smaller screens */
+        position: absolute;
+        right: 1.5rem;
+        top: 1.2rem;
+    }
+
+    .dark-mode-toggle {
+        position: absolute;
+        left: 1.5rem;
+        top: 1.2rem;
+        margin-left: 0;
+    }
+
+    .logo {
+        height: 40px;
+        margin-bottom: 0.5rem;
+    }
+
+    .social-icons img {
+        height: 25px;
+        width: 25px;
+        margin: 0 0.5rem;
+    }
+
+    /* Table adjustments for very small screens */
+    .schedule-table th,
+    .schedule-table td {
+        padding: 0.6rem;
+        font-size: 0.8rem;
+    }
+    .schedule-table .book-class-button {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.75rem;
+    }
+
+    /* Form input adjustments */
+    form input[type="text"],
+    form input[type="email"],
+    form input[type="date"],
+    form input[type="time"],
+    form input[type="number"],
+    form select,
+    form textarea {
+        width: calc(100% - 20px);
+    }
+}
+
+@media (max-width: 480px) {
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.6rem; }
+    h3 { font-size: 1.2rem; }
+    h4 { font-size: 1rem; }
+    p, ul, li { font-size: 0.9rem; } /* Slightly larger than the problematic 0.5rem, but still fine */
+
+    .banner h1 {
+        font-size: 2rem;
+    }
+
+    .banner p {
+        font-size: 0.9rem;
+    }
+
+    .cta-button {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.85rem;
+    }
+
+    .logo {
+        height: 35px;
+    }
+
+    footer p {
+        font-size: 0.8rem;
+    }
+
+    .social-icons img {
+        height: 20px;
+        width: 20px;
+    }
+
+    /* Further table adjustments for tiny screens */
+    .schedule-table th,
+    .schedule-table td {
+        padding: 0.5rem;
+        font-size: 0.75rem;
+    }
+
+    .schedule-table .book-class-button {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.7rem;
+    }
+
+    .pricing-card {
+        padding: 1.5rem;
+    }
+
+    .pricing-card .price {
+        font-size: 1.8rem;
+    }
+
+    .star-rating label {
+        font-size: 1.8rem;
+    }
+}
+
+/* Specific adjustments for about-us instructor profiles */
+.instructor-profiles .instructor {
+    margin-bottom: 1.5rem;
+}
+
+.instructor-profiles .instructor:last-child {
+    margin-bottom: 0;
+}
